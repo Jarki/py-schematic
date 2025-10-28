@@ -1,0 +1,7 @@
+{
+  "project_name": "New schematic",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "description": "A short description of the project.",
+  "version": "0.1.0",
+  "python_version": "3.13"
+}
