@@ -6,8 +6,3 @@ readme = "README.md"
 requires-python = ">={{ cookiecutter.python_version }}"
 dependencies = []
 licence = { text = "MIT" }
-
-[dependency-groups]
-dev = [
-    "mypy>=1.18.2",
-]

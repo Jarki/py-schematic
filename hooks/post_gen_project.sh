@@ -7,5 +7,7 @@ echo "Running initial setup..."
 
 echo "Running uv sync..."
 uv sync
+echo "Adding development dependencies..."
+uv add --group dev mypy
 
 echo "Setup complete. Your venv is ready at ./.venv"
