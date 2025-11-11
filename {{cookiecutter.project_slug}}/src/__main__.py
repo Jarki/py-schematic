@@ -1,17 +1,16 @@
-import logging
-import logging.config
+from loguru import logger
 
 import src
 
-logging.config.dictConfig(src.LOGGING_CONFIG)
-log = logging.getLogger(__name__)
 
 def main() -> None:
-    log.debug("Debug message")
-    log.info("Info message")
-    log.warning("Warning message")
-    log.error("Error message")
-    log.critical("Critical message")
+    src.setup_logger()
+
+    logger.debug("Debug message")
+    logger.info("Info message")
+    logger.warning("Warning message")
+    logger.error("Error message")
+    logger.critical("Critical message")
     print("Hello from {{ cookiecutter.project_name }}!")
 
 if __name__ == "__main__":

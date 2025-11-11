@@ -7,6 +7,8 @@ echo "Running initial setup..."
 
 echo "Running uv sync..."
 uv sync
+echo "Installing dependencies..."
+uv add loguru
 echo "Adding development dependencies..."
 uv add --group dev mypy
 
