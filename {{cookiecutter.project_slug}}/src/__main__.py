@@ -6,7 +6,7 @@ import src
 logging.config.dictConfig(src.LOGGING_CONFIG)
 log = logging.getLogger(__name__)
 
-def main():
+def main() -> None:
     log.debug("Debug message")
     log.info("Info message")
     log.warning("Warning message")
