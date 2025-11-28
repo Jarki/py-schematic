@@ -1,6 +1,0 @@
-{
-  "python.defaultInterpreterPath": ".venv/bin/python",
-  "python.analysis.typeCheckingMode": "standard",  
-  "mypy-type-checker.importStrategy": "fromEnvironment",
-  "mypy-type-checker.args": ["--config-file=mypy.ini"]
-}
