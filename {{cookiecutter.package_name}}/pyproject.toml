@@ -10,7 +10,6 @@ licence = { text = "MIT" }
 [tool.poe.tasks]
 # Testing
 test = "pytest"
-test-cov = "pytest --cov={{ cookiecutter.package_name }} --cov-report=term-missing --cov-report=html"
 test-watch = "pytest --watch"
 
 # Linting and formatting
