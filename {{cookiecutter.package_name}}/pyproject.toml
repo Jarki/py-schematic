@@ -6,3 +6,21 @@ readme = "README.md"
 requires-python = ">={{ cookiecutter.python_version }}"
 dependencies = []
 licence = { text = "MIT" }
+
+[tool.poe.tasks]
+# Testing
+test = "pytest"
+test-cov = "pytest --cov={{ cookiecutter.package_name }} --cov-report=term-missing --cov-report=html"
+test-watch = "pytest --watch"
+
+# Linting and formatting
+lint = "ruff check ."
+lint-fix = "ruff check --fix ."
+format = "ruff format ."
+format-check = "ruff format --check ."
+
+# Type checking
+typecheck = "mypy {{ cookiecutter.package_name }}"
+
+# Combined quality checks
+check = ["format-check", "lint", "typecheck", "test"]

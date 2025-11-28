@@ -11,6 +11,7 @@ echo "Installing dependencies..."
 uv add loguru
 uv add python-dotenv
 echo "Adding development dependencies..."
+uv add --group dev poethepoet
 uv add --group dev mypy
 uv add --group dev ruff
 echo "Adding testing dependencies..."
