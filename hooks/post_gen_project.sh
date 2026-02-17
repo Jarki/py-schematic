@@ -8,7 +8,6 @@ echo "Running initial setup..."
 echo "Running uv sync..."
 uv sync
 echo "Installing dependencies..."
-uv add loguru
 uv add python-dotenv
 echo "Adding development dependencies..."
 uv add --group dev poethepoet

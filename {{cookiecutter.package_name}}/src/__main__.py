@@ -1,4 +1,4 @@
-from loguru import logger
+import logging
 
 import src
 
@@ -6,6 +6,7 @@ import src
 def main() -> None:
     src.setup_logger()
 
+    logger = logging.getLogger(__name__)
     logger.debug("Debug message")
     logger.info("Info message")
     logger.warning("Warning message")
