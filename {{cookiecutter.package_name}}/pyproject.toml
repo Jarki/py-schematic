@@ -9,7 +9,7 @@ licence = { text = "MIT" }
 
 [tool.poe.tasks]
 # Application entrypoint
-entrypoint = "python -m src"
+start = "python -m src"
 
 # Testing
 test = "pytest"
