@@ -3,14 +3,14 @@
      hx-target="this"
      hx-swap="outerHTML"
      hx-trigger="every 60s">
-    <!-- <p class="weather-emoji">{{ emoji }}</p>
+    <p class="weather-emoji">{{ emoji }}</p>
     <p class="weather-description">{{ description }}</p>
     <ul class="weather-stats">
         <li><span class="label">Temperature</span><span class="value">{{ temperature }}°C</span></li>
         <li><span class="label">Wind speed</span><span class="value">{{ windspeed }} km/h</span></li>
         <li><span class="label">Wind direction</span><span class="value">{{ winddirection }}°</span></li>
         <li><span class="label">Updated</span><span class="value">{{ time }}</span></li>
-    </ul> -->
+    </ul>
     <button hx-get="/weather" hx-target="#weather-card" hx-swap="outerHTML">
         Refresh
     </button>
