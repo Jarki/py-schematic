@@ -5,31 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ cookiecutter.project_name }}</title>
     <link rel="icon" type="image/gif" href="/static/icons8-favicon.gif">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script>
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function isDark() {
+            return document.documentElement.classList.contains('dark');
+        }
+
+        function setIcon() {
+            const btn = document.getElementById('theme-toggle');
+            if (btn) btn.textContent = isDark() ? '🌙' : '☀️';
+        }
+
+        function applyTheme(theme) {
+            const dark = theme === 'dark' || (theme === 'system' && mq.matches);
+            document.documentElement.classList.toggle('dark', dark);
+            if (theme !== 'system') localStorage.setItem('theme', theme);
+            setIcon();
+        }
+
+        function cycleTheme() {
+            applyTheme(isDark() ? 'light' : 'dark');
+        }
+
+        // Apply class immediately (before paint) — button not in DOM yet
+        const saved = localStorage.getItem('theme') || 'system';
+        document.documentElement.classList.toggle('dark', saved === 'dark' || (saved === 'system' && mq.matches));
+
+        // Set icon once DOM is ready
+        document.addEventListener('DOMContentLoaded', setIcon);
+
+        // Follow system changes when no explicit preference is set
+        mq.addEventListener('change', () => {
+            if (!localStorage.getItem('theme')) applyTheme('system');
+        });
+    </script>
     <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+    <script>
+        document.addEventListener('htmx:afterSwap', (e) => {
+            if (e.detail.target.id === 'content') {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                e.detail.requestConfig.elt.classList.add('active');
+            }
+        });
+    </script>
     <style>
         .htmx-indicator { opacity: 0; transition: opacity 200ms; }
         .htmx-request .htmx-indicator { opacity: 1; }
-        .weather-emoji { font-size: 3rem; margin: 0; }
-        .weather-stats li { display: flex; justify-content: space-between; }
+        .nav-link.active {
+            color: rgb(99 102 241); /* indigo-500 */
+            background: rgb(238 242 255); /* indigo-50 */
+            border-left-color: rgb(99 102 241);
+            font-weight: 500;
+        }
+        .dark .nav-link.active {
+            color: rgb(129 140 248); /* indigo-400 */
+            background: rgb(49 46 129 / 0.3); /* indigo-950 */
+            border-left-color: rgb(129 140 248);
+        }
     </style>
 </head>
-<body>
-    <h1>{{ cookiecutter.project_name }}</h1>
+<body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex">
 
-    <img src="/static/images.jpeg" alt="Example image">
+    <!-- SIDEBAR -->
+    <aside class="w-56 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col flex-shrink-0 fixed h-full">
+        <div class="flex items-center gap-3 px-5 py-5 border-b border-gray-200 dark:border-gray-800">
+            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-sm">◈</div>
+            <span class="font-semibold text-gray-900 dark:text-white text-sm">{{ cookiecutter.project_name }}</span>
+        </div>
+        <nav class="flex-1 py-3">
+            <div class="px-5 py-2 text-xs font-bold tracking-widest text-gray-400 uppercase">Main</div>
+            <a hx-get="/dashboard" hx-target="#content" hx-swap="outerHTML"
+               class="nav-link active flex items-center gap-3 px-5 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent transition-colors cursor-pointer">
+                <span>⊞</span> Dashboard
+            </a>
+            <a hx-get="/gallery" hx-target="#content" hx-swap="outerHTML"
+               class="nav-link flex items-center gap-3 px-5 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent transition-colors cursor-pointer">
+                <span>🖼️</span> Gallery
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-2.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 border-l-2 border-transparent transition-colors">
+                <span>⚙️</span> Settings
+            </a>
+        </nav>
+    </aside>
 
-    <h2>Weather — London</h2>
-    <button
-        hx-get="/weather"
-        hx-target="#weather-placeholder"
-        hx-swap="outerHTML"
-        hx-indicator="#spinner"
-    >
-        Fetch weather
-    </button>
-    <span id="spinner" class="htmx-indicator"> Loading...</span>
+    <!-- MAIN -->
+    <div class="flex-1 flex flex-col ml-56">
 
-    <div id="weather-placeholder"></div>
+        <!-- TOP BAR -->
+        <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-7 flex items-center justify-between flex-shrink-0" style="height:60px">
+            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+            <div class="flex items-center gap-3">
+                <button
+                    hx-get="/weather"
+                    hx-target="#weather-placeholder"
+                    hx-swap="outerHTML"
+                    hx-indicator="#spinner"
+                    class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg font-medium transition-colors"
+                >
+                    ⟳ Fetch weather
+                </button>
+                <span id="spinner" class="htmx-indicator text-sm text-gray-400">Loading…</span>
+                <button id="theme-toggle" onclick="cycleTheme()"
+                    class="text-sm border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-800 transition-colors">🌙</button>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <main class="flex-1 p-7">
+            <div id="content">
+                <div id="weather-placeholder"></div>
+            </div>
+        </main>
+    </div>
+
 </body>
 </html>

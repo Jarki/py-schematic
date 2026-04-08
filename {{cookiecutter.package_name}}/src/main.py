@@ -42,6 +42,16 @@ async def index(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(request, "index.html")
 
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "dashboard.html")
+
+
+@app.get("/gallery", response_class=HTMLResponse)
+async def gallery(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(request, "gallery.html")
+
+
 @app.get("/weather", response_class=HTMLResponse)
 async def weather(request: Request) -> HTMLResponse:
     async with httpx.AsyncClient() as client:
