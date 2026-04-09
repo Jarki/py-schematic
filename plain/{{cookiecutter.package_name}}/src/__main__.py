@@ -13,7 +13,7 @@ def main() -> None:
     logger.warning("Warning message")
     logger.error("Error message")
     logger.critical("Critical message")
-    print("Hello from New schematic!")
+    print("Hello from {{ cookiecutter.project_name }}!")
 
 
 if __name__ == "__main__":

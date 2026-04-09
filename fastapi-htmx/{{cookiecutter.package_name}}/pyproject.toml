@@ -1,0 +1,35 @@
+[project]
+name = "{{ cookiecutter.package_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.description }}"
+readme = "README.md"
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx",
+    "jinja2",
+    "python-multipart",
+]
+licence = { text = "MIT" }
+
+# Application entrypoint
+[tool.poe.tasks]
+start.shell = "uvicorn src.main:app --host ${HOST:-127.0.0.1} --port ${PORT:-8000}"
+dev.shell = "uvicorn src.main:app --reload --host ${HOST:-127.0.0.1} --port ${PORT:-8000}"
+
+# Testing
+test = "pytest"
+test-watch = "pytest --watch"
+
+# Linting and formatting
+lint = "ruff check ."
+lint-fix = "ruff check --fix ."
+format = "ruff format ."
+format-check = "ruff format --check ."
+
+# Type checking
+typecheck = "mypy src"
+
+# Combined quality checks
+check = ["format-check", "lint", "typecheck", "test"]

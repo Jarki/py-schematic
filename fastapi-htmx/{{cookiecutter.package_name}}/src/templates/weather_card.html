@@ -1,0 +1,32 @@
+{% raw %}<div id="weather-card"
+     hx-get="/weather"
+     hx-target="this"
+     hx-swap="outerHTML"
+     hx-trigger="every 60s"
+     class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-6 max-w-lg">
+    <div class="flex items-center gap-4 mb-5">
+        <span class="text-5xl">{{ emoji }}</span>
+        <div>
+            <div class="text-2xl font-semibold text-gray-900 dark:text-white">{{ temperature }}°C</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{{ description }}</div>
+        </div>
+    </div>
+    <div class="divide-y divide-gray-100 dark:divide-gray-800 mb-5">
+        <div class="flex justify-between py-2.5 text-sm">
+            <span class="text-gray-500 dark:text-gray-400">Wind speed</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{ windspeed }} km/h</span>
+        </div>
+        <div class="flex justify-between py-2.5 text-sm">
+            <span class="text-gray-500 dark:text-gray-400">Wind direction</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{ winddirection }}°</span>
+        </div>
+        <div class="flex justify-between py-2.5 text-sm">
+            <span class="text-gray-500 dark:text-gray-400">Updated</span>
+            <span class="font-medium text-gray-900 dark:text-white font-mono">{{ time }}</span>
+        </div>
+    </div>
+    <button hx-get="/weather" hx-target="#weather-card" hx-swap="outerHTML"
+            class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg font-medium transition-colors">
+        ⟳ Refresh
+    </button>
+</div>{% endraw %}

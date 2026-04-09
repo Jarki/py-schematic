@@ -1,7 +1,14 @@
 {
-  "project_name": "New schematic",
-  "package_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "description": "A short description of the project.",
-  "version": "0.1.0",
-  "python_version": "3.13"
+  "templates": {
+    "plain": {
+      "path": "./plain",
+      "title": "Plain Python",
+      "description": "Basic Python project with logging, pydantic-settings, and testing"
+    },
+    "fastapi-htmx": {
+      "path": "./fastapi-htmx",
+      "title": "FastAPI + HTMX",
+      "description": "FastAPI with HTMX, Jinja2 templates, Tailwind CSS, and a weather dashboard example"
+    }
+  }
 }
