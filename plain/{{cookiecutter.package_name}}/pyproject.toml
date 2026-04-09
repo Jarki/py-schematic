@@ -1,0 +1,28 @@
+[project]
+name = "{{ cookiecutter.package_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.description }}"
+readme = "README.md"
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = []
+licence = { text = "MIT" }
+
+[tool.poe.tasks]
+# Application entrypoint
+start = "python -m src"
+
+# Testing
+test = "pytest"
+test-watch = "pytest --watch"
+
+# Linting and formatting
+lint = "ruff check ."
+lint-fix = "ruff check --fix ."
+format = "ruff format ."
+format-check = "ruff format --check ."
+
+# Type checking
+typecheck = "mypy src"
+
+# Combined quality checks
+check = ["format-check", "lint", "typecheck", "test"]
